@@ -1,0 +1,48 @@
+/* Global CSS */
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+
+/* CSS Variables */
+:root {
+  --light-text-color: "#7dd87d";
+  --light-background-color: "#d3d6db";
+  --dark-text-color: "#f7f7f7";
+  --dark-background-color: "#393e46";
+}
+
+/* body */
+body {
+  background-color: var(--dark-background-color);
+  color: var(--light-text-color);
+  font-family: "Lato", sans-serif;
+  font-weight: 300;
+  font-style: normal;
+}
+
+/* Google Font - Lato */
+.lato-light {
+  font-family: "Lato", sans-serif;
+  font-weight: 300;
+  font-style: normal;
+}
+
+.lato-bold {
+  font-family: "Lato", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.lato-black {
+  font-family: "Lato", sans-serif;
+  font-weight: 900;
+  font-style: normal;
+}
+
+.lato-regular-italic {
+  font-family: "Lato", sans-serif;
+  font-weight: 400;
+  font-style: italic;
+}

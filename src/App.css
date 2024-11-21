@@ -1,7 +1,8 @@
 /* CSS Variables */
 :root {
-  --light-text-color: #7dd87d;
-  --light-background-color: #d3d6db;
+  /* --light-text-color: #7dd87d; */
+  --light-text-color: #53d397;
+  --light-background-color: #f7f9ff;
   --dark-text-color: #f7f7f7;
   --dark-background-color: #393e46;
 }
@@ -11,6 +12,12 @@
   margin: 0px;
   padding: 0px;
   box-sizing: border-box;
+}
+
+/* Main Root CSS */
+#root {
+  height: 100vh;
+  margin: 10px;
 }
 
 /* body */

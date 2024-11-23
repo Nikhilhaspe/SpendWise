@@ -7,4 +7,15 @@
 
 .outletContainer {
   flex: 8;
+
+  overflow-x: scroll;
+  /* Hide scrollbar for WebKit browsers */
+  scrollbar-width: none;
+}
+
+/* Hide scrollbar for WebKit browsers */
+.outletContainer::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none;
 }

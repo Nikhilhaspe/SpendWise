@@ -9,15 +9,14 @@
 
 /* Global CSS */
 * {
-  margin: 0px;
-  padding: 0px;
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
 }
 
 /* Main Root CSS */
 #root {
   height: 100vh;
-  margin: 10px;
 }
 
 /* body */

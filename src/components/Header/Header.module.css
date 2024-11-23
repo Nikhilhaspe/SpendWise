@@ -1,0 +1,25 @@
+.headerConntainer {
+  padding: 10px;
+  flex: 0.7;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.headerConntainer a {
+  height: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+
+  text-decoration: none;
+  color: var(--light-text-color);
+}
+
+.logo {
+  font-family: Tahoma, Geneva, Verdana, sans-serif;
+  font-size: xx-large;
+  letter-spacing: 1px;
+}

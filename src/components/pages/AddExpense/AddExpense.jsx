@@ -9,6 +9,9 @@ import styles from "./AddExpense.module.css";
 // utility functions
 import { getUniqueId, isBlankOrEmpty } from "../../../utilities";
 
+// indexed db queries
+import { addExpense } from "../../../indexedDbOps";
+
 // reducer
 const INITIAL_STATE = {
   description: "",
@@ -17,6 +20,7 @@ const INITIAL_STATE = {
   date: new Date().toISOString().split("T")[0],
   currentTag: "",
   tags: [],
+  isLoading: false,
 };
 function reducer(state, action) {
   switch (action.type) {
@@ -32,6 +36,11 @@ function reducer(state, action) {
         ...state,
         currentTag: "",
         tags: [...state.tags, state.currentTag],
+      };
+    case "toggleLoading":
+      return {
+        ...state,
+        isLoading: !state.isLoading,
       };
     default:
       return state;
@@ -61,20 +70,29 @@ function AddExpense() {
     dispatch({ type: "tagAdd" });
   }
 
-  function saveExpense() {
-    const payload = {
-      id: getUniqueId(),
-      description,
-      category,
-      amount: Number(amount),
-      date,
-      currentTag,
-      tags,
-    };
+  async function saveExpense() {
+    try {
+      dispatch({ type: "toggleLoading" });
 
-    if (validatePayload(payload)) return;
+      const payload = {
+        id: getUniqueId(),
+        description,
+        category,
+        amount: Number(amount),
+        date,
+        currentTag,
+        tags,
+      };
 
-    // add data to the indexedDB
+      if (validatePayload(payload)) return;
+
+      // add data to the indexedDB
+      await addExpense(payload);
+    } catch (error) {
+      toast.error(error.message);
+    } finally {
+      dispatch({ type: "toggleLoading" });
+    }
   }
 
   function validatePayload(payload) {

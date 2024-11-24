@@ -1,0 +1,106 @@
+.container {
+  margin-top: 30px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.formWrapper {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 40px;
+}
+
+.row {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+}
+
+.row label {
+  font-size: 20px;
+}
+
+.row input {
+  color: var(--dark-text-color);
+  font-size: 1.3rem;
+  width: 100%;
+  padding: 10px;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  border-bottom: 2px solid var(--dark-text-color);
+
+  transition: all 0.3s ease-in-out;
+}
+
+.row input:focus {
+  font-size: 1.4rem;
+  border-bottom: 2px solid var(--light-text-color);
+}
+
+.tagsContainer {
+  min-width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  font-size: 1rem;
+  color: var(--dark-text-color);
+}
+
+.tagsTab {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+  padding: 5px 10px;
+  border-radius: 10px;
+  border: 2px solid var(--light-text-color);
+
+  transition: all 0.3s ease-in-out;
+}
+
+.tagsTab:hover {
+  border: 2px solid var(--light-background-color);
+  color: var(--dark-text-color);
+  background-color: var(--delete-red-color);
+}
+
+.addTagPosition {
+  position: relative;
+}
+
+.addTagBtn {
+  padding: 5px;
+  cursor: pointer;
+  position: absolute;
+  font-size: 2rem;
+  right: 10px;
+}
+
+.saveBtn {
+  width: 90%;
+  height: 60px;
+  font-size: 1.4rem;
+  cursor: pointer;
+
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  border-radius: 10px;
+  border: 2px solid var(--light-text-color);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transition: all 0.3s ease-in-out;
+}
+
+.saveBtn:hover {
+  width: 100%;
+  color: var(--dark-text-color);
+  background-color: var(--light-text-color);
+}

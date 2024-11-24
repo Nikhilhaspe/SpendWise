@@ -17,7 +17,9 @@ function reducer(state, action) {
 
 function ExpensesContextProvider(props) {
   // props
+  // eslint-disable-next-line react/prop-types
   const { children } = props;
+
   // state
   const [{ expenses }, dispatch] = useReducer(reducer, INITIAL_STATE);
 

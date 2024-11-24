@@ -13,6 +13,9 @@ import { getUniqueId, isBlankOrEmpty } from "../../../utilities";
 // indexed db queries
 import { addExpense } from "../../../indexedDbOps";
 
+// components
+import Tags from "../../Tags/Tags.component";
+
 // reducer
 const INITIAL_STATE = {
   description: "",
@@ -42,6 +45,16 @@ function reducer(state, action) {
       return {
         ...state,
         isLoading: !state.isLoading,
+      };
+    case "reset":
+      return {
+        description: "",
+        category: "",
+        amount: 0,
+        date: new Date().toISOString().split("T")[0],
+        currentTag: "",
+        tags: [],
+        isLoading: true,
       };
     default:
       return state;
@@ -83,7 +96,6 @@ function AddExpense() {
         category,
         amount: Number(amount),
         date,
-        currentTag,
         tags,
       };
 
@@ -92,9 +104,11 @@ function AddExpense() {
       // add data to the indexedDB
       await addExpense(payload);
 
+      dispatch({ type: "reset" });
+
       toast.success("Saved Successfully!");
     } catch (error) {
-      toast.error(error.message);
+      toast.error(error.message || "Something went wrong while adding data!");
     } finally {
       dispatch({ type: "toggleLoading" });
     }
@@ -123,7 +137,7 @@ function AddExpense() {
       <div className={styles.formWrapper}>
         <div className={styles.row}>
           <input
-            placeholder="Enter Your Description"
+            placeholder="Enter Description"
             type="text"
             name="description"
             id="description"
@@ -134,7 +148,7 @@ function AddExpense() {
         <div className={styles.row}>
           <input
             type="text"
-            placeholder="Enter Your Category"
+            placeholder="Enter Category"
             name="category"
             id="category"
             value={category}
@@ -174,19 +188,8 @@ function AddExpense() {
             +
           </div>
         </div>
-        <div className={styles.tagsContainer}>
-          {tags.map((tag, index) => {
-            return (
-              <div
-                key={index}
-                className={styles.tagsTab}
-                onClick={() => handleTagRemove(tag)}
-              >
-                {tag} &times;
-              </div>
-            );
-          })}
-        </div>
+
+        <Tags tags={tags} handleTagRemove={handleTagRemove} />
 
         <button className={styles.saveBtn} onClick={saveExpense}>
           {isLoading ? <MoonLoader size={30} color="#f7f9ff" /> : "Save"}

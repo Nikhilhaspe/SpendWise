@@ -1,0 +1,27 @@
+.tagsContainer {
+  min-width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  font-size: 1rem;
+  color: var(--dark-text-color);
+}
+
+.tagsTab {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+  padding: 5px 10px;
+  border-radius: 10px;
+  border: 2px solid var(--light-text-color);
+
+  transition: all 0.3s ease-in-out;
+}
+
+.tagsTab:hover {
+  border: 2px solid var(--light-background-color);
+  color: var(--dark-text-color);
+  background-color: var(--delete-red-color);
+}

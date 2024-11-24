@@ -17,6 +17,18 @@ async function initDb() {
   return db;
 }
 
+// READ (ALL)
+async function getAllExpenses() {
+  const db = await initDb();
+  return await db.getAll("expenses");
+}
+
+// READ (SINGLE BY ID)
+async function getExpense(id) {
+  const db = await initDb();
+  return db.get("expenses", id);
+}
+
 // CREATE
 async function addExpense(newExpense) {
   const db = await initDb();
@@ -26,10 +38,22 @@ async function addExpense(newExpense) {
   await tx.done;
 }
 
-// READ ALL
-async function getAllExpenses() {
+// UPDATE (SINGLE)
+async function updateExpense(expense) {
   const db = await initDb();
-  return await db.getAll("expenses");
+  const tx = db.transaction("expenses", "readwrite");
+  const store = tx.objectStore("expenses");
+  await store.put(expense);
+  await tx.done;
 }
 
-export { addExpense, getAllExpenses };
+// DELETE (SINGLE)
+async function deleteExpense(expenseId) {
+  const db = await initDb();
+  const tx = db.transaction("expenses", "readwrite");
+  const store = tx.objectStore("expenses");
+  await store.delete(expenseId);
+  await tx.done;
+}
+
+export { getAllExpenses, addExpense, deleteExpense, updateExpense, getExpense };

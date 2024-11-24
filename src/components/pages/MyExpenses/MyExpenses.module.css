@@ -1,0 +1,92 @@
+.container {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 30px;
+  padding: 10px;
+
+  color: var(--dark-text-color);
+}
+
+.loaderContainer {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.expenseContainer {
+  margin-top: 30px;
+  border-radius: 10px;
+  width: 300px;
+  padding: 10px;
+  border: 2px solid var(--dark-text-color);
+  cursor: pointer;
+
+  transition: all 0.3s ease;
+}
+
+.logoContainer {
+  font-size: 2rem;
+  padding: 10px;
+
+  position: relative;
+}
+
+.data {
+  font-weight: bold;
+}
+
+.dataContent {
+  font-weight: normal;
+}
+
+.infoContainer {
+  padding: 10px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.tagsContainer {
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.tag {
+  padding: 5px;
+  border-radius: 4px;
+  border: 2px solid var(--dark-text-color);
+  transition: all 0.3s ease;
+}
+
+.tag:hover,
+.expenseContainer:hover {
+  border: 2px solid var(--light-text-color);
+  transform: scale(1.1);
+}
+
+.actionsContainer {
+  padding: 10px;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+
+  display: flex;
+  gap: 10px;
+}
+
+.actIcon {
+  transition: all 0.3s ease-in-out;
+}
+
+.actIcon:hover {
+  color: var(--light-text-color);
+}

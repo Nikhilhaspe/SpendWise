@@ -8,6 +8,7 @@ import UserProfile from "./components/pages/UserProfile/UserProfile";
 import MyExpenses from "./components/pages/MyExpenses/MyExpenses";
 import AddExpense from "./components/pages/AddExpense/AddExpense";
 import AnalyzeExpense from "./components/pages/AnalyzeExpense/AnalyzeExpense";
+import EditExpense from "./components/pages/EditExpense/EditExpense";
 
 // app layout
 import AppLayout from "./components/AppLayout/AppLayout.component";
@@ -25,6 +26,7 @@ function App() {
           <Route index element={<Navigate to="expenses" />} />
           <Route path="expenses" element={<MyExpenses />} />
           <Route path="addExpense" element={<AddExpense />} />
+          <Route path="editExpense/:expenseId" element={<EditExpense />} />
           <Route path="analyzeExpense" element={<AnalyzeExpense />} />
           <Route path="profile" element={<UserProfile />} />
         </Route>

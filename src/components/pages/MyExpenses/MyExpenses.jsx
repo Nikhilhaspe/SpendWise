@@ -11,6 +11,7 @@ import {
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { MoonLoader } from "react-spinners";
+import { useNavigate } from "react-router-dom";
 
 // css module
 import styles from "./MyExpenses.module.css";
@@ -19,9 +20,26 @@ import styles from "./MyExpenses.module.css";
 import { getAllExpenses, deleteExpense } from "../../../indexedDbOps";
 
 function MyExpenses() {
+  // RRD
+  const navigate = useNavigate();
   // state
   const [expenses, setExpenses] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+
+  // get data from idb
+  async function getExpenses() {
+    try {
+      setIsLoading(true);
+
+      const data = await getAllExpenses();
+
+      setExpenses(data);
+    } catch (error) {
+      toast.error(error.message || "Something went wrong while getting data!");
+    } finally {
+      setIsLoading(false);
+    }
+  }
 
   // event handlers
   async function handleDeleteClick(expenseId) {
@@ -37,22 +55,7 @@ function MyExpenses() {
   }
 
   function handleEditClick(expenseId) {
-    console.log(expenseId);
-  }
-
-  // get data from idb
-  async function getExpenses() {
-    try {
-      setIsLoading(true);
-
-      const data = await getAllExpenses();
-
-      setExpenses(data);
-    } catch (error) {
-      toast.error(error.message || "Something went wrong while getting data!");
-    } finally {
-      setIsLoading(false);
-    }
+    navigate(`/app/editExpense/${expenseId}`);
   }
 
   // effects

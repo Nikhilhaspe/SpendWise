@@ -86,11 +86,13 @@
   height: 60px;
   font-size: 1.4rem;
   cursor: pointer;
+  background-color: transparent;
 
   letter-spacing: 0.5px;
   text-transform: uppercase;
   border-radius: 10px;
   border: 2px solid var(--light-text-color);
+  color: var(--light-text-color);
 
   display: flex;
   align-items: center;

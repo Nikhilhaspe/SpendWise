@@ -26,4 +26,10 @@ async function addExpense(newExpense) {
   await tx.done;
 }
 
-export { addExpense };
+// READ ALL
+async function getAllExpenses() {
+  const db = await initDb();
+  return await db.getAll("expenses");
+}
+
+export { addExpense, getAllExpenses };

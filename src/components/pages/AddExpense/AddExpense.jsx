@@ -1,7 +1,8 @@
 // library imports
-import { toast, ToastContainer } from "react-toastify";
 import { useReducer } from "react";
+import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { MoonLoader } from "react-spinners";
 
 // css module
 import styles from "./AddExpense.module.css";
@@ -49,8 +50,10 @@ function reducer(state, action) {
 
 function AddExpense() {
   // state
-  const [{ description, category, amount, date, tags, currentTag }, dispatch] =
-    useReducer(reducer, INITIAL_STATE);
+  const [
+    { description, category, amount, date, tags, currentTag, isLoading },
+    dispatch,
+  ] = useReducer(reducer, INITIAL_STATE);
 
   // event handlers
   function handleFormChange(event) {
@@ -88,6 +91,8 @@ function AddExpense() {
 
       // add data to the indexedDB
       await addExpense(payload);
+
+      toast.success("Saved Successfully!");
     } catch (error) {
       toast.error(error.message);
     } finally {
@@ -183,9 +188,9 @@ function AddExpense() {
           })}
         </div>
 
-        <div className={styles.saveBtn} onClick={saveExpense}>
-          Save
-        </div>
+        <button className={styles.saveBtn} onClick={saveExpense}>
+          {isLoading ? <MoonLoader size={30} color="#f7f9ff" /> : "Save"}
+        </button>
       </div>
     </div>
   );

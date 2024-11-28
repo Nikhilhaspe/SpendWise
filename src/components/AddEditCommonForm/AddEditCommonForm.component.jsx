@@ -1,20 +1,21 @@
 // library imports
-import { useReducer } from "react";
+import { useEffect, useReducer } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { MoonLoader } from "react-spinners";
 
 // css module
-import styles from "./AddExpense.module.css";
+import styles from "./AddEditCommonForm.module.css";
 
 // utility functions
-import { getUniqueId, isBlankOrEmpty } from "../../../utilities";
+import { getUniqueId, isBlankOrEmpty } from "../../utilities";
 
 // indexed db queries
-import { addExpense } from "../../../indexedDbOps";
+import { addExpense, getExpense, updateExpense } from "../../indexedDbOps";
 
 // components
-import Tags from "../../Tags/Tags.component";
+import Tags from "../Tags/Tags.component";
+import { useParams } from "react-router-dom";
 
 // reducer
 const INITIAL_STATE = {
@@ -46,22 +47,34 @@ function reducer(state, action) {
         ...state,
         isLoading: !state.isLoading,
       };
+    case "fillEditData":
+      return {
+        ...state,
+        description: action.payload.description,
+        category: action.payload.category,
+        amount: action.payload.amount,
+        date: action.payload.date,
+        tags: action.payload.tags,
+      };
     case "reset":
       return {
+        ...state,
         description: "",
         category: "",
         amount: 0,
         date: new Date().toISOString().split("T")[0],
         currentTag: "",
         tags: [],
-        isLoading: true,
       };
     default:
       return state;
   }
 }
 
-function AddExpense() {
+function AddEditCommonForm() {
+  // RRD
+  const { expenseId } = useParams();
+
   // state
   const [
     { description, category, amount, date, tags, currentTag, isLoading },
@@ -86,6 +99,23 @@ function AddExpense() {
     dispatch({ type: "tagAdd" });
   }
 
+  // root: Handle Submit Form
+  async function handleSubmitForm(submitType) {
+    switch (submitType) {
+      case "add":
+        console.log("ADD");
+        await saveExpense();
+        return;
+      case "edit":
+        console.log("EDIT");
+        await editExpense();
+        return;
+      default:
+        throw new Error("Invalid Submit Button Type");
+    }
+  }
+
+  // save expense
   async function saveExpense() {
     try {
       dispatch({ type: "toggleLoading" });
@@ -114,6 +144,61 @@ function AddExpense() {
     }
   }
 
+  // get expense by id
+  async function getCurrentExpenseData(id) {
+    try {
+      dispatch({ type: "toggleLoading" });
+
+      const currentExpense = await getExpense(id);
+
+      dispatch({ type: "fillEditData", payload: currentExpense });
+    } catch (error) {
+      toast.error(error.message || "Something went wrong while adding data!");
+    } finally {
+      dispatch({ type: "toggleLoading" });
+    }
+  }
+
+  // edit expense
+  async function editExpense() {
+    try {
+      dispatch({ type: "toggleLoading" });
+
+      const payload = {
+        id: expenseId,
+        description,
+        category,
+        amount: Number(amount),
+        date,
+        tags,
+      };
+
+      if (validatePayload(payload)) return;
+
+      // add data to the indexedDB
+      await updateExpense(payload);
+
+      dispatch({ type: "reset" });
+
+      toast.success("Saved Successfully!");
+    } catch (error) {
+      toast.error(error.message || "Something went wrong while adding data!");
+    } finally {
+      dispatch({ type: "toggleLoading" });
+    }
+  }
+
+  // Effects
+  useEffect(function () {
+    async function asyncHelper(id) {
+      await getCurrentExpenseData(id);
+    }
+
+    if (expenseId) asyncHelper(expenseId);
+    else dispatch({ type: "reset" });
+  }, []);
+
+  // utility functions
   function validatePayload(payload) {
     if (isBlankOrEmpty(payload.description)) {
       toast.error("Description can not be empty!");
@@ -134,6 +219,11 @@ function AddExpense() {
   return (
     <div className={styles.container}>
       <ToastContainer position="top-center" theme="dark" />
+
+      <p className={styles.actionHeader}>
+        {expenseId ? "Edit Your Expense" : "Add New Expense"}
+      </p>
+
       <div className={styles.formWrapper}>
         <div className={styles.row}>
           <input
@@ -191,12 +281,21 @@ function AddExpense() {
 
         <Tags tags={tags} handleTagRemove={handleTagRemove} />
 
-        <button className={styles.saveBtn} onClick={saveExpense}>
-          {isLoading ? <MoonLoader size={30} color="#f7f9ff" /> : "Save"}
+        <button
+          className={styles.saveBtn}
+          onClick={() => handleSubmitForm(expenseId ? "edit" : "add")}
+        >
+          {isLoading ? (
+            <MoonLoader size={30} color="#f7f9ff" />
+          ) : expenseId ? (
+            "Edit Your Expense"
+          ) : (
+            "Add New Expense"
+          )}
         </button>
       </div>
     </div>
   );
 }
 
-export default AddExpense;
+export default AddEditCommonForm;

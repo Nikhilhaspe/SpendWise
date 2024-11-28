@@ -6,9 +6,8 @@ import HomePage from "./components/pages/HomePage/HomePage";
 import PageNotFound from "./components/pages/PageNotFound/PageNotFound";
 import UserProfile from "./components/pages/UserProfile/UserProfile";
 import MyExpenses from "./components/pages/MyExpenses/MyExpenses";
-import AddExpense from "./components/pages/AddExpense/AddExpense";
 import AnalyzeExpense from "./components/pages/AnalyzeExpense/AnalyzeExpense";
-import EditExpense from "./components/pages/EditExpense/EditExpense";
+import AddEditCommonForm from "./components/AddEditCommonForm/AddEditCommonForm.component";
 
 // app layout
 import AppLayout from "./components/AppLayout/AppLayout.component";
@@ -25,8 +24,11 @@ function App() {
         <Route path="app" element={<AppLayout />}>
           <Route index element={<Navigate to="expenses" />} />
           <Route path="expenses" element={<MyExpenses />} />
-          <Route path="addExpense" element={<AddExpense />} />
-          <Route path="editExpense/:expenseId" element={<EditExpense />} />
+          <Route path="addExpense" element={<AddEditCommonForm />} />
+          <Route
+            path="editExpense/:expenseId"
+            element={<AddEditCommonForm />}
+          />
           <Route path="analyzeExpense" element={<AnalyzeExpense />} />
           <Route path="profile" element={<UserProfile />} />
         </Route>

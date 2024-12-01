@@ -83,6 +83,7 @@ function MyExpenses() {
 
   async function handleFilterClick(filterType) {
     try {
+      setIsFilterVisible(false);
       setIsLoading(true);
 
       const data = await getFilteredData(

@@ -9,10 +9,9 @@ import {
   faPenToSquare,
   faFilter,
 } from "@fortawesome/free-solid-svg-icons";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { MoonLoader } from "react-spinners";
 import { useNavigate } from "react-router-dom";
+import { useOutletContext } from "react-router-dom";
 
 // css module
 import styles from "./MyExpenses.module.css";
@@ -31,6 +30,8 @@ import {
 const TODAY_DATE = new Date().toISOString().split("T")[0];
 
 function MyExpenses() {
+  const toast = useOutletContext();
+
   // RRD
   const navigate = useNavigate();
 
@@ -161,8 +162,6 @@ function MyExpense(props) {
 
   return (
     <div className={styles.expenseContainer}>
-      <ToastContainer position="bottom-center" theme="dark" />
-
       <div className={styles.logoContainer}>
         <FontAwesomeIcon icon={faWallet} />
 

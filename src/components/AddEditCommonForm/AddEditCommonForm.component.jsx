@@ -1,8 +1,7 @@
+/* eslint-disable react/prop-types */
 // library imports
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useOutletContext } from "react-router-dom";
 import { useEffect, useReducer } from "react";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { MoonLoader } from "react-spinners";
 
 // css module
@@ -73,6 +72,8 @@ function reducer(state, action) {
 }
 
 function AddEditCommonForm() {
+  const toast = useOutletContext();
+
   // RRD
   const { expenseId } = useParams();
   const navigate = useNavigate();
@@ -220,8 +221,6 @@ function AddEditCommonForm() {
 
   return (
     <div className={styles.container}>
-      <ToastContainer position="top-center" theme="dark" />
-
       <p className={styles.actionHeader}>
         {expenseId ? "Edit Your Expense" : "Add New Expense"}
       </p>

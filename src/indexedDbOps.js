@@ -47,6 +47,56 @@ async function getExpense(id) {
   return db.get("expenses", id);
 }
 
+// READ FILTERED DATA
+async function getFilteredData(filterType, fromDate = "", toDate = "") {
+  switch (filterType) {
+    case "clear":
+      return await getRecentExpenses();
+    case "thismonth":
+      return await getCurrentMonthData();
+    case "lastmonth":
+      return await getLastMonthData();
+    case "datewise":
+      return getDatePeriodData(fromDate, toDate);
+  }
+}
+
+// HELPER 1 : CURRENT MONTH DATA
+async function getCurrentMonthData() {
+  const now = new Date();
+  let currentMonth = String(now.getMonth() + 1).padStart(2, "0");
+
+  return (await getAllExpenses()).filter((expense) => {
+    let month = expense.date.split("-")[1];
+
+    return currentMonth === month;
+  });
+}
+
+// HELPER 2 : LAST MONTH DATA
+async function getLastMonthData() {
+  const now = new Date();
+  let lastMonth = Number(String(now.getMonth() + 1).padStart(2, "0")) - 1;
+
+  return (await getAllExpenses()).filter((expense) => {
+    let month = Number(expense.date.split("-")[1]);
+
+    return lastMonth === month;
+  });
+}
+
+// HELPER 3 : CHOOSE DATE DATA
+async function getDatePeriodData(fromDate, toDate) {
+  const fromDt = new Date(fromDate);
+  const toDt = new Date(toDate);
+
+  return (await getAllExpenses()).filter((expense) => {
+    let expenseDt = new Date(expense.date);
+
+    return expenseDt >= fromDt && expenseDt <= toDt;
+  });
+}
+
 // CREATE
 async function addExpense(newExpense) {
   const db = await initDb();
@@ -77,6 +127,7 @@ async function deleteExpense(expenseId) {
 export {
   getRecentExpenses,
   getAllExpenses,
+  getFilteredData,
   addExpense,
   deleteExpense,
   updateExpense,

@@ -90,3 +90,11 @@
 .actIcon:hover {
   color: var(--light-text-color);
 }
+
+.filterIconContainer {
+  color: var(--dark-text-color);
+  font-size: 2rem;
+  padding: 10px;
+  display: flex;
+  justify-content: flex-end;
+}

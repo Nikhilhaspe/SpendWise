@@ -23,6 +23,24 @@ async function getAllExpenses() {
   return await db.getAll("expenses");
 }
 
+// READ (GET LAST 10 EXPENSES)
+async function getRecentExpenses() {
+  const db = await initDb();
+  const tx = db.transaction("expenses", "readonly");
+  const store = tx.objectStore("expenses");
+
+  // Open a cursor to iterate through the store in descending order by "id"
+  let records = [];
+  let cursor = await store.openCursor(null, "prev");
+
+  while (cursor && records.length < 10) {
+    records.push(cursor.value);
+    cursor = await cursor.continue();
+  }
+
+  return records;
+}
+
 // READ (SINGLE BY ID)
 async function getExpense(id) {
   const db = await initDb();
@@ -56,4 +74,11 @@ async function deleteExpense(expenseId) {
   await tx.done;
 }
 
-export { getAllExpenses, addExpense, deleteExpense, updateExpense, getExpense };
+export {
+  getRecentExpenses,
+  getAllExpenses,
+  addExpense,
+  deleteExpense,
+  updateExpense,
+  getExpense,
+};

@@ -17,7 +17,11 @@ import { useNavigate } from "react-router-dom";
 import styles from "./MyExpenses.module.css";
 
 // indexed db queries
-import { getAllExpenses, deleteExpense } from "../../../indexedDbOps";
+import {
+  getRecentExpenses,
+  getAllExpenses,
+  deleteExpense,
+} from "../../../indexedDbOps";
 
 function MyExpenses() {
   // RRD
@@ -31,7 +35,8 @@ function MyExpenses() {
     try {
       setIsLoading(true);
 
-      const data = await getAllExpenses();
+      // recent 10 records
+      const data = await getRecentExpenses();
 
       setExpenses(data);
     } catch (error) {

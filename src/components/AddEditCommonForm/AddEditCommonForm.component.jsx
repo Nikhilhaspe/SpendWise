@@ -1,4 +1,5 @@
 // library imports
+import { useNavigate } from "react-router-dom";
 import { useEffect, useReducer } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -74,6 +75,7 @@ function reducer(state, action) {
 function AddEditCommonForm() {
   // RRD
   const { expenseId } = useParams();
+  const navigate = useNavigate();
 
   // state
   const [
@@ -103,12 +105,12 @@ function AddEditCommonForm() {
   async function handleSubmitForm(submitType) {
     switch (submitType) {
       case "add":
-        console.log("ADD");
         await saveExpense();
+        navigate("/app/expenses");
         return;
       case "edit":
-        console.log("EDIT");
         await editExpense();
+        navigate("/app/expenses");
         return;
       default:
         throw new Error("Invalid Submit Button Type");

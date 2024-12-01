@@ -81,13 +81,21 @@ function MyExpenses() {
   }
 
   async function handleFilterClick(filterType) {
-    const data = await getFilteredData(
-      filterType,
-      dateFilter.fromDate,
-      dateFilter.toDate
-    );
+    try {
+      setIsLoading(true);
 
-    setExpenses(data);
+      const data = await getFilteredData(
+        filterType,
+        dateFilter.fromDate,
+        dateFilter.toDate
+      );
+
+      setExpenses(data);
+    } catch (error) {
+      toast.error(error.message || "Something went wrong while filtering data");
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   // effects

@@ -33,4 +33,37 @@ function isBlankOrEmpty(str) {
   return false;
 }
 
-export { getUniqueId, getTodaysDateFormatted, isBlankOrEmpty };
+// get unique tags from passed data
+function getUniqueTags(expenses) {
+  const uniqueTags = new Set();
+
+  expenses.forEach((expense) => {
+    expense.tags.forEach((tag) => {
+      uniqueTags.add(tag.trim());
+    });
+  });
+
+  return Array.from(uniqueTags);
+}
+
+// get expenses by tag
+function getExpensesByTag(expenses, tag) {
+  let expensesByTag = expenses.filter((expense) => {
+    return expense.tags.some((expenseTag) => {
+      if (tag === expenseTag) {
+        return true;
+      }
+      return false;
+    });
+  });
+
+  return expensesByTag;
+}
+
+export {
+  getUniqueId,
+  getTodaysDateFormatted,
+  isBlankOrEmpty,
+  getUniqueTags,
+  getExpensesByTag,
+};

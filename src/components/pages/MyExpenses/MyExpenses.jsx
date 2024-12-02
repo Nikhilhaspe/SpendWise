@@ -8,6 +8,8 @@ import {
   faTrashCan,
   faPenToSquare,
   faFilter,
+  faPlus,
+  faMinus,
 } from "@fortawesome/free-solid-svg-icons";
 import { MoonLoader } from "react-spinners";
 import { useNavigate } from "react-router-dom";
@@ -25,6 +27,7 @@ import {
   deleteExpense,
   getFilteredData,
 } from "../../../indexedDbOps";
+import { getExpensesByTag, getUniqueTags } from "../../../utilities";
 
 // constants
 const TODAY_DATE = new Date().toISOString().split("T")[0];
@@ -43,6 +46,9 @@ function MyExpenses() {
     fromDate: TODAY_DATE,
     toDate: TODAY_DATE,
   });
+  const [isTagsDropdownVisible, setIsTagsDropdownVisible] = useState(false);
+  const [tagOptions, setTagOptions] = useState(["Tag-1", "Tag-2"]);
+  const [tagFilteredExpenses, setTagFilteredExpenses] = useState([]);
 
   // get data from idb
   async function getExpenses() {
@@ -53,6 +59,7 @@ function MyExpenses() {
       const data = await getRecentExpenses();
 
       setExpenses(data);
+      setTagOptions(getUniqueTags(data));
     } catch (error) {
       toast.error(error.message || "Something went wrong while getting data!");
     } finally {
@@ -81,6 +88,17 @@ function MyExpenses() {
     setDateFilter({ ...dateFilter, [event.target.name]: event.target.value });
   }
 
+  function handleTagOptionClick(selectedTag) {
+    setIsTagsDropdownVisible(false);
+
+    const data = getExpensesByTag(expenses, selectedTag);
+    setTagFilteredExpenses(data);
+  }
+
+  function handleClearTagClick() {
+    setTagFilteredExpenses([]);
+  }
+
   async function handleFilterClick(filterType) {
     try {
       setIsFilterVisible(false);
@@ -93,6 +111,7 @@ function MyExpenses() {
       );
 
       setExpenses(data);
+      setTagOptions(getUniqueTags(data));
     } catch (error) {
       toast.error(error.message || "Something went wrong while filtering data");
     } finally {
@@ -129,6 +148,46 @@ function MyExpenses() {
         />
       </div>
 
+      {expenses.length > 0 && (
+        <div className={styles.tagsFilterContainer}>
+          <div className={styles.tagsLabel}>
+            <span
+              onClick={() =>
+                setIsTagsDropdownVisible(
+                  (isTagsDropdownVisible) => !isTagsDropdownVisible
+                )
+              }
+            >
+              <FontAwesomeIcon
+                icon={isTagsDropdownVisible ? faMinus : faPlus}
+              />
+              &nbsp; Get expenses by your tag
+            </span>
+            {tagFilteredExpenses.length > 0 && (
+              <span
+                onClick={handleClearTagClick}
+                className={styles.clearTagContainer}
+              >
+                <FontAwesomeIcon icon={faTrashCan} /> Clear Tag
+              </span>
+            )}
+          </div>
+          {isTagsDropdownVisible && (
+            <div className={styles.tagsSelect}>
+              {tagOptions.map((tagOption, index) => (
+                <div
+                  onClick={() => handleTagOptionClick(tagOption)}
+                  key={index}
+                  className={styles.tagOption}
+                >
+                  {tagOption}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+
       {isFilterVisible && (
         <FilterExpenses
           dateFilter={dateFilter}
@@ -138,9 +197,18 @@ function MyExpenses() {
       )}
 
       <div className={styles.container}>
-        {expenses.length === 0 ? (
-          <div className={styles.container}>No Records Found! 😥</div>
-        ) : (
+        {tagFilteredExpenses.length !== 0 ? (
+          tagFilteredExpenses.map((expense) => {
+            return (
+              <MyExpense
+                handleEditClick={handleEditClick}
+                handleDeleteClick={handleDeleteClick}
+                key={expense.id}
+                expense={expense}
+              />
+            );
+          })
+        ) : expenses.length > 0 ? (
           expenses.map((expense) => {
             return (
               <MyExpense
@@ -151,6 +219,8 @@ function MyExpenses() {
               />
             );
           })
+        ) : (
+          <div className={styles.container}>No Records Found! 😥</div>
         )}
       </div>
     </>

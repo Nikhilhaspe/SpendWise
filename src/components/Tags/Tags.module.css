@@ -5,6 +5,8 @@
   gap: 10px;
   font-size: 1rem;
   color: var(--dark-text-color);
+
+  text-transform: capitalize;
 }
 
 .tagsTab {

@@ -61,6 +61,7 @@
 }
 
 .tag {
+  text-transform: capitalize;
   padding: 5px;
   border-radius: 4px;
   border: 2px solid var(--dark-text-color);

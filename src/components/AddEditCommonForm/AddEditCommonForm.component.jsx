@@ -40,7 +40,7 @@ function reducer(state, action) {
       return {
         ...state,
         currentTag: "",
-        tags: [...state.tags, state.currentTag],
+        tags: [...state.tags, state.currentTag.trim().toLowerCase()],
       };
     case "toggleLoading":
       return {

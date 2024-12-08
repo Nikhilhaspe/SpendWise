@@ -3,10 +3,14 @@ import { useReducer } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { MoonLoader } from "react-spinners";
+import { useNavigate } from "react-router-dom";
 
 // css module
 import styles from "./SignUp.module.css";
 import { isBlankOrEmpty, isValidEmail } from "../../../utilities";
+
+// indexed db queries for user auth
+import { doesUserExist, initUserDb } from "../../../AuthDbOps";
 
 // reducer
 const INITIAL_STATE = {
@@ -35,6 +39,9 @@ function reducer(state, action) {
 }
 
 function SignUp() {
+  // RRD
+  const navigate = useNavigate();
+
   // state
   const [{ username, email, password, confirmPassword, isLoading }, dispatch] =
     useReducer(reducer, INITIAL_STATE);
@@ -47,7 +54,7 @@ function SignUp() {
     });
   }
 
-  function handleFormSubmit() {
+  async function handleFormSubmit() {
     try {
       dispatch({
         type: "toggleLoading",
@@ -64,7 +71,20 @@ function SignUp() {
         return;
       }
 
-      toast.success("Signed Up Successfully!");
+      const alreadyExists = await doesUserExist(username);
+
+      console.log(alreadyExists);
+
+      if (alreadyExists) {
+        toast.error(
+          "Username already exists, kindly choose the different username!"
+        );
+        return;
+      } else {
+        initUserDb(username, password);
+        toast.success("Signed Up Successfully!");
+        navigate("/login");
+      }
     } catch (error) {
       toast.error(
         error.message ||

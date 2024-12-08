@@ -2,8 +2,10 @@
 import { openDB } from "idb";
 
 // initialise database
-async function initDb() {
-  const db = await openDB("spendWiseDb", 1, {
+async function initDb(username) {
+  console.log(username);
+
+  const db = await openDB(`${username}-spendWiseDb`, 1, {
     upgrade(db) {
       if (!db.objectStoreNames.contains("expenses")) {
         db.createObjectStore("expenses", {
@@ -18,14 +20,14 @@ async function initDb() {
 }
 
 // READ (ALL)
-async function getAllExpenses() {
-  const db = await initDb();
+async function getAllExpenses(username) {
+  const db = await initDb(username);
   return await db.getAll("expenses");
 }
 
 // READ (GET LAST 10 EXPENSES)
-async function getRecentExpenses() {
-  const db = await initDb();
+async function getRecentExpenses(username) {
+  const db = await initDb(username);
   const tx = db.transaction("expenses", "readonly");
   const store = tx.objectStore("expenses");
 
@@ -42,31 +44,36 @@ async function getRecentExpenses() {
 }
 
 // READ (SINGLE BY ID)
-async function getExpense(id) {
-  const db = await initDb();
+async function getExpense(username, id) {
+  const db = await initDb(username);
   return db.get("expenses", id);
 }
 
 // READ FILTERED DATA
-async function getFilteredData(filterType, fromDate = "", toDate = "") {
+async function getFilteredData(
+  username,
+  filterType,
+  fromDate = "",
+  toDate = ""
+) {
   switch (filterType) {
     case "clear":
-      return await getRecentExpenses();
+      return await getRecentExpenses(username);
     case "thismonth":
-      return await getCurrentMonthData();
+      return await getCurrentMonthData(username);
     case "lastmonth":
-      return await getLastMonthData();
+      return await getLastMonthData(username);
     case "datewise":
-      return getDatePeriodData(fromDate, toDate);
+      return getDatePeriodData(username, fromDate, toDate);
   }
 }
 
 // HELPER 1 : CURRENT MONTH DATA
-async function getCurrentMonthData() {
+async function getCurrentMonthData(username) {
   const now = new Date();
   let currentMonth = String(now.getMonth() + 1).padStart(2, "0");
 
-  return (await getAllExpenses()).filter((expense) => {
+  return (await getAllExpenses(username)).filter((expense) => {
     let month = expense.date.split("-")[1];
 
     return currentMonth === month;
@@ -74,11 +81,11 @@ async function getCurrentMonthData() {
 }
 
 // HELPER 2 : LAST MONTH DATA
-async function getLastMonthData() {
+async function getLastMonthData(username) {
   const now = new Date();
   let lastMonth = Number(String(now.getMonth() + 1).padStart(2, "0")) - 1;
 
-  return (await getAllExpenses()).filter((expense) => {
+  return (await getAllExpenses(username)).filter((expense) => {
     let month = Number(expense.date.split("-")[1]);
 
     return lastMonth === month;
@@ -86,11 +93,11 @@ async function getLastMonthData() {
 }
 
 // HELPER 3 : CHOOSE DATE DATA
-async function getDatePeriodData(fromDate, toDate) {
+async function getDatePeriodData(username, fromDate, toDate) {
   const fromDt = new Date(fromDate);
   const toDt = new Date(toDate);
 
-  return (await getAllExpenses()).filter((expense) => {
+  return (await getAllExpenses(username)).filter((expense) => {
     let expenseDt = new Date(expense.date);
 
     return expenseDt >= fromDt && expenseDt <= toDt;
@@ -98,8 +105,8 @@ async function getDatePeriodData(fromDate, toDate) {
 }
 
 // CREATE
-async function addExpense(newExpense) {
-  const db = await initDb();
+async function addExpense(username, newExpense) {
+  const db = await initDb(username);
   const tx = db.transaction("expenses", "readwrite");
   const store = tx.objectStore("expenses");
   await store.add(newExpense);
@@ -107,8 +114,8 @@ async function addExpense(newExpense) {
 }
 
 // UPDATE (SINGLE)
-async function updateExpense(expense) {
-  const db = await initDb();
+async function updateExpense(username, expense) {
+  const db = await initDb(username);
   const tx = db.transaction("expenses", "readwrite");
   const store = tx.objectStore("expenses");
   await store.put(expense);
@@ -116,8 +123,8 @@ async function updateExpense(expense) {
 }
 
 // DELETE (SINGLE)
-async function deleteExpense(expenseId) {
-  const db = await initDb();
+async function deleteExpense(username, expenseId) {
+  const db = await initDb(username);
   const tx = db.transaction("expenses", "readwrite");
   const store = tx.objectStore("expenses");
   await store.delete(expenseId);

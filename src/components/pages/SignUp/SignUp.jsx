@@ -73,8 +73,6 @@ function SignUp() {
 
       const alreadyExists = await doesUserExist(username);
 
-      console.log(alreadyExists);
-
       if (alreadyExists) {
         toast.error(
           "Username already exists, kindly choose the different username!"

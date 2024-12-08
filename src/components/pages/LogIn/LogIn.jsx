@@ -5,6 +5,9 @@ import "react-toastify/dist/ReactToastify.css";
 import { MoonLoader } from "react-spinners";
 import { useNavigate } from "react-router-dom";
 
+// context api
+import { useAuth } from "../../../contexts/AuthContext";
+
 // css module
 import styles from "./LogIn.module.css";
 
@@ -13,6 +16,12 @@ import { login } from "../../../AuthDbOps";
 import { isBlankOrEmpty } from "../../../utilities";
 
 function LogIn() {
+  // RRD
+  const navigate = useNavigate();
+
+  // context api
+  const { dispatch } = useAuth();
+
   // state
   const [formData, setFormData] = useState({
     username: "",
@@ -37,6 +46,8 @@ function LogIn() {
       const loginStatus = await login(formData.username, formData.password);
 
       if (loginStatus) {
+        dispatch({ type: "login", payload: formData.username });
+        navigate("/app");
         toast.success("Login Successfull");
       } else {
         toast.error("Invalid Username or Password");

@@ -21,6 +21,9 @@ import styles from "./MyExpenses.module.css";
 // components
 import FilterExpenses from "../../FilterExpenses/FilterExpenses.component";
 
+// context api
+import { useAuth } from "../../../contexts/AuthContext";
+
 // indexed db queries
 import {
   getRecentExpenses,
@@ -34,6 +37,9 @@ const TODAY_DATE = new Date().toISOString().split("T")[0];
 
 function MyExpenses() {
   const toast = useOutletContext();
+
+  // context api
+  const { username } = useAuth();
 
   // RRD
   const navigate = useNavigate();
@@ -56,7 +62,9 @@ function MyExpenses() {
       setIsLoading(true);
 
       // recent 10 records
-      const data = await getRecentExpenses();
+      console.log(username);
+      const data = await getRecentExpenses(username);
+      console.log(data);
 
       setExpenses(data);
       setTagOptions(getUniqueTags(data));
@@ -70,7 +78,7 @@ function MyExpenses() {
   // event handlers
   async function handleDeleteClick(expenseId) {
     try {
-      await deleteExpense(expenseId);
+      await deleteExpense(username, expenseId);
       // re-paint the UI
       await getExpenses();
 
@@ -105,6 +113,7 @@ function MyExpenses() {
       setIsLoading(true);
 
       const data = await getFilteredData(
+        username,
         filterType,
         dateFilter.fromDate,
         dateFilter.toDate

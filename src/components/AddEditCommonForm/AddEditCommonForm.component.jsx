@@ -10,6 +10,9 @@ import styles from "./AddEditCommonForm.module.css";
 // utility functions
 import { getUniqueId, isBlankOrEmpty } from "../../utilities";
 
+// context api
+import { useAuth } from "../../contexts/AuthContext";
+
 // indexed db queries
 import { addExpense, getExpense, updateExpense } from "../../ExpenseDbOps";
 
@@ -74,6 +77,9 @@ function reducer(state, action) {
 function AddEditCommonForm() {
   const toast = useOutletContext();
 
+  // context api
+  const { username } = useAuth();
+
   // RRD
   const { expenseId } = useParams();
   const navigate = useNavigate();
@@ -135,7 +141,7 @@ function AddEditCommonForm() {
       if (validatePayload(payload)) return;
 
       // add data to the indexedDB
-      await addExpense(payload);
+      await addExpense(username, payload);
 
       dispatch({ type: "reset" });
 
@@ -152,7 +158,7 @@ function AddEditCommonForm() {
     try {
       dispatch({ type: "toggleLoading" });
 
-      const currentExpense = await getExpense(id);
+      const currentExpense = await getExpense(username, id);
 
       dispatch({ type: "fillEditData", payload: currentExpense });
     } catch (error) {
@@ -179,7 +185,7 @@ function AddEditCommonForm() {
       if (validatePayload(payload)) return;
 
       // add data to the indexedDB
-      await updateExpense(payload);
+      await updateExpense(username, payload);
 
       dispatch({ type: "reset" });
 

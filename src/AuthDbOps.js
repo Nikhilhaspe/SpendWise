@@ -11,6 +11,12 @@ async function initDb(username) {
           autoIncrement: true,
         });
       }
+      if (!db.objectStoreNames.contains("expenses")) {
+        db.createObjectStore("expenses", {
+          keyPath: "id",
+          autoIncrement: true,
+        });
+      }
     },
   });
 

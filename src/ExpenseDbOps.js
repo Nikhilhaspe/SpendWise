@@ -129,6 +129,22 @@ async function deleteExpense(username, expenseId) {
   await tx.done;
 }
 
+// Function to import CSV data to IndexedDB
+const importToIndexedDB = async (data, username) => {
+  const db = await initDb(username);
+
+  const tx = db.transaction("expenses", "readwrite");
+  const store = tx.objectStore("expenses");
+
+  data.forEach(async (item) => {
+    // Parse tags back into an array
+    item.tags = item.tags.split(",").map((tag) => tag.trim());
+    await store.put(item);
+  });
+
+  await tx.done;
+};
+
 export {
   getRecentExpenses,
   getAllExpenses,
@@ -137,4 +153,5 @@ export {
   deleteExpense,
   updateExpense,
   getExpense,
+  importToIndexedDB,
 };

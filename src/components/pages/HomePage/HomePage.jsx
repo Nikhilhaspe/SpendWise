@@ -1,4 +1,5 @@
 // library import
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 // components
@@ -7,14 +8,28 @@ import Footer from "../../Footer/Footer.component";
 // css module
 import styles from "./HomePage.module.css";
 
+// context api
+import { useAuth } from "../../../contexts/AuthContext";
+
 function HomePage() {
   // rrd
   const navigate = useNavigate();
+
+  // context api
+  const { isLoggedIn } = useAuth();
 
   // event handlers
   function handleNavigateButtonClick(url) {
     navigate(url);
   }
+
+  // effects
+  useEffect(
+    function () {
+      if (isLoggedIn) navigate("/app");
+    },
+    [isLoggedIn, navigate]
+  );
 
   return (
     <div className={styles.container}>

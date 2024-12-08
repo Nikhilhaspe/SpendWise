@@ -11,7 +11,7 @@ import styles from "./AddEditCommonForm.module.css";
 import { getUniqueId, isBlankOrEmpty } from "../../utilities";
 
 // indexed db queries
-import { addExpense, getExpense, updateExpense } from "../../indexedDbOps";
+import { addExpense, getExpense, updateExpense } from "../../ExpenseDbOps";
 
 // components
 import Tags from "../Tags/Tags.component";

@@ -8,6 +8,8 @@ import UserProfile from "./components/pages/UserProfile/UserProfile";
 import MyExpenses from "./components/pages/MyExpenses/MyExpenses";
 import AnalyzeExpense from "./components/pages/AnalyzeExpense/AnalyzeExpense";
 import AddEditCommonForm from "./components/AddEditCommonForm/AddEditCommonForm.component";
+import LogIn from "./components/pages/LogIn/LogIn";
+import SignUp from "./components/pages/SignUp/SignUp";
 
 // app layout
 import AppLayout from "./components/AppLayout/AppLayout.component";
@@ -20,7 +22,8 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route index path="/" element={<HomePage />} />
-        <Route path="login" element={<p>Login</p>} />
+        <Route path="login" element={<LogIn />} />
+        <Route path="signup" element={<SignUp />} />
         <Route path="app" element={<AppLayout />}>
           <Route index element={<Navigate to="expenses" />} />
           <Route path="expenses" element={<MyExpenses />} />

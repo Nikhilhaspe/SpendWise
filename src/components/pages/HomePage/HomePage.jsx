@@ -12,8 +12,8 @@ function HomePage() {
   const navigate = useNavigate();
 
   // event handlers
-  function handleStartButtonClick() {
-    navigate("/app");
+  function handleNavigateButtonClick(url) {
+    navigate(url);
   }
 
   return (
@@ -23,8 +23,18 @@ function HomePage() {
       </h1>
       <h3>👋 Track your daily expenses and much more! 💵</h3>
 
-      <button onClick={handleStartButtonClick} className={styles.startBtn}>
-        Explore Now
+      <button
+        onClick={() => handleNavigateButtonClick("/login")}
+        className={styles.startBtn}
+      >
+        LogIn
+      </button>
+
+      <button
+        onClick={() => handleNavigateButtonClick("/signup")}
+        className={styles.startBtn}
+      >
+        Sign Up
       </button>
 
       <Footer />

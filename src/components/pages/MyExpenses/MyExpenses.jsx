@@ -26,7 +26,7 @@ import {
   getRecentExpenses,
   deleteExpense,
   getFilteredData,
-} from "../../../indexedDbOps";
+} from "../../../ExpenseDbOps";
 import { getExpensesByTag, getUniqueTags } from "../../../utilities";
 
 // constants

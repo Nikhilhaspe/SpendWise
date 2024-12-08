@@ -62,9 +62,7 @@ function MyExpenses() {
       setIsLoading(true);
 
       // recent 10 records
-      console.log(username);
       const data = await getRecentExpenses(username);
-      console.log(data);
 
       setExpenses(data);
       setTagOptions(getUniqueTags(data));

@@ -1,0 +1,43 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.viewWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.row {
+  font-size: 1.4rem;
+  color: var(--dark-text-color);
+}
+
+.expBtn {
+  font-size: 1.4rem;
+  padding: 25px 50px;
+  cursor: pointer;
+  background-color: transparent;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  border-radius: 10px;
+  border: 2px solid var(--light-text-color);
+  color: var(--light-text-color);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transition: all 0.3s ease-in-out;
+}
+
+.expBtn:hover {
+  padding: 25px 70px;
+  color: var(--dark-text-color);
+  background-color: var(--light-text-color);
+}

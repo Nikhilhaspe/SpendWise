@@ -3,8 +3,6 @@ import { openDB } from "idb";
 
 // initialise database
 async function initDb(username) {
-  console.log(username);
-
   const db = await openDB(`${username}-spendWiseDb`, 1, {
     upgrade(db) {
       if (!db.objectStoreNames.contains("expenses")) {

@@ -23,8 +23,6 @@ function ExpensesContextProvider(props) {
   // state
   const [{ expenses }, dispatch] = useReducer(reducer, INITIAL_STATE);
 
-  console.log(expenses, dispatch);
-
   return <ExpensesContext.Provider>{children}</ExpensesContext.Provider>;
 }
 

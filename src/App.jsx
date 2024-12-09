@@ -17,6 +17,7 @@ import AppLayout from "./components/AppLayout/AppLayout.component";
 // Auth Context
 import AuthContextProvider from "./contexts/AuthContext";
 import AuthProtection from "./components/AuthProtection/AuthProtection.component";
+import ThemeContextProvider from "./contexts/ThemeContext";
 
 // app css
 import "./App.css";
@@ -24,32 +25,34 @@ import "./App.css";
 function App() {
   return (
     <BrowserRouter>
-      <AuthContextProvider>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="login" element={<LogIn />} />
-          <Route path="signup" element={<SignUp />} />
-          <Route
-            path="app"
-            element={
-              <AuthProtection>
-                <AppLayout />
-              </AuthProtection>
-            }
-          >
-            <Route index element={<Navigate to="expenses" />} />
-            <Route path="expenses" element={<MyExpenses />} />
-            <Route path="addExpense" element={<AddEditCommonForm />} />
+      <ThemeContextProvider>
+        <AuthContextProvider>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="login" element={<LogIn />} />
+            <Route path="signup" element={<SignUp />} />
             <Route
-              path="editExpense/:expenseId"
-              element={<AddEditCommonForm />}
-            />
-            <Route path="analyzeExpense" element={<AnalyzeExpense />} />
-            <Route path="profile" element={<UserProfile />} />
-          </Route>
-          <Route path="*" element={<PageNotFound />} />
-        </Routes>
-      </AuthContextProvider>
+              path="app"
+              element={
+                <AuthProtection>
+                  <AppLayout />
+                </AuthProtection>
+              }
+            >
+              <Route index element={<Navigate to="expenses" />} />
+              <Route path="expenses" element={<MyExpenses />} />
+              <Route path="addExpense" element={<AddEditCommonForm />} />
+              <Route
+                path="editExpense/:expenseId"
+                element={<AddEditCommonForm />}
+              />
+              <Route path="analyzeExpense" element={<AnalyzeExpense />} />
+              <Route path="profile" element={<UserProfile />} />
+            </Route>
+            <Route path="*" element={<PageNotFound />} />
+          </Routes>
+        </AuthContextProvider>
+      </ThemeContextProvider>
     </BrowserRouter>
   );
 }

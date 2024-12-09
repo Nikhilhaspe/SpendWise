@@ -9,17 +9,33 @@ import {
   faChartLine,
   faPlus,
   faMoon,
+  faSun,
 } from "@fortawesome/free-solid-svg-icons";
 
 // css module
 import styles from "./TabNavigation.module.css";
 
+// context api
+import { useTheme } from "../../contexts/ThemeContext";
+
 function TabNavigation() {
+  // context api
+  const { theme, dispatch } = useTheme();
+
+  console.log(theme);
+
   return (
     <div className={styles.tabNavContainer}>
-      <div className={`${styles.tab} ${styles.themeContainer}`}>
+      <div
+        onClick={() => dispatch({ type: "toggleTheme" })}
+        className={`${styles.tab} ${styles.themeContainer}`}
+      >
         <div className={styles.iconContainer}>
-          <FontAwesomeIcon icon={faMoon} />
+          {theme === "dark" ? (
+            <FontAwesomeIcon icon={faMoon} />
+          ) : (
+            <FontAwesomeIcon icon={faSun} />
+          )}
         </div>
       </div>
       <div className={styles.tab}>
@@ -27,7 +43,6 @@ function TabNavigation() {
           <div className={styles.iconContainer}>
             <FontAwesomeIcon icon={faChartLine} />
           </div>
-          {/* <div>Analyze Expenses</div> */}
         </NavLink>
       </div>
       <div className={styles.tab}>
@@ -35,7 +50,6 @@ function TabNavigation() {
           <div className={styles.iconContainer}>
             <FontAwesomeIcon icon={faPlus} />
           </div>
-          {/* <div>Add New Expense</div> */}
         </NavLink>
       </div>
       <div className={styles.tab}>
@@ -43,7 +57,6 @@ function TabNavigation() {
           <div className={styles.iconContainer}>
             <FontAwesomeIcon icon={faCoins} />
           </div>
-          {/* <div>My Expenses</div> */}
         </NavLink>
       </div>
       <div className={styles.tab}>
@@ -51,7 +64,6 @@ function TabNavigation() {
           <div className={styles.iconContainer}>
             <FontAwesomeIcon icon={faUser} />
           </div>
-          {/* <div>Profile</div> */}
         </NavLink>
       </div>
     </div>

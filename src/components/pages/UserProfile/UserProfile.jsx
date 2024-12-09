@@ -18,6 +18,10 @@ import { getAllExpenses, importToIndexedDB } from "../../../ExpenseDbOps";
 // constants
 const TODAY_DATE = new Date().toISOString().split("T")[0];
 
+// context api
+import { useTheme } from "../../../contexts/ThemeContext";
+import { color } from "chart.js/helpers";
+
 function UserProfile() {
   // state
   const [isLoading, setIsLoading] = useState(false);
@@ -27,6 +31,7 @@ function UserProfile() {
 
   // context api
   const { username } = useAuth();
+  const { theme } = useTheme();
 
   // event handlers
   async function exportToCsv() {
@@ -100,11 +105,17 @@ function UserProfile() {
   }
 
   return (
-    <div className={styles.container}>
+    <div
+      className={`${styles.container} ${theme === "dark" ? "" : "lightMode"}`}
+    >
       <ToastContainer position="top-center" theme="dark" />
 
       <div className={styles.viewWrapper}>
-        <div className={styles.row}>Username : {username} </div>
+        <div
+          className={`${styles.row} ${theme === "dark" ? "" : "lightModeText"}`}
+        >
+          Username : {username}{" "}
+        </div>
         <div className={styles.row}>
           <button
             disabled={isLoading}
@@ -112,7 +123,10 @@ function UserProfile() {
             className={styles.expBtn}
           >
             {isLoading ? (
-              <MoonLoader size={30} color="#f7f9ff" />
+              <MoonLoader
+                size={30}
+                color={theme === "dark" ? "#f7f9ff" : "#393e46"}
+              />
             ) : (
               "Export Data"
             )}
@@ -125,7 +139,10 @@ function UserProfile() {
             className={styles.expBtn}
           >
             {isLoading ? (
-              <MoonLoader size={30} color="#f7f9ff" />
+              <MoonLoader
+                size={30}
+                color={theme === "dark" ? "#f7f9ff" : "#393e46"}
+              />
             ) : (
               "Import Data"
             )}

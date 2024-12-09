@@ -23,6 +23,7 @@ import FilterExpenses from "../../FilterExpenses/FilterExpenses.component";
 
 // context api
 import { useAuth } from "../../../contexts/AuthContext";
+import { useTheme } from "../../../contexts/ThemeContext";
 
 // indexed db queries
 import {
@@ -40,6 +41,7 @@ function MyExpenses() {
 
   // context api
   const { username } = useAuth();
+  const { theme } = useTheme();
 
   // RRD
   const navigate = useNavigate();
@@ -138,15 +140,20 @@ function MyExpenses() {
   if (isLoading && expenses.length === 0) {
     return (
       <div className={styles.loaderContainer}>
-        <MoonLoader color="#f7f9ff" />
+        <MoonLoader color={theme === "dark" ? "#f7f9ff" : "#393e46"} />
       </div>
     );
   }
 
   return (
     <>
-      <div className={styles.filterIconContainer}>
+      <div
+        className={`${styles.filterIconContainer} ${
+          theme === "dark" ? "" : "lightMode"
+        }`}
+      >
         <FontAwesomeIcon
+          className={theme === "dark" ? "" : "lightModeText"}
           style={{ cursor: "pointer" }}
           icon={faFilter}
           onClick={() =>
@@ -156,7 +163,11 @@ function MyExpenses() {
       </div>
 
       {expenses.length > 0 && (
-        <div className={styles.tagsFilterContainer}>
+        <div
+          className={`${styles.tagsFilterContainer} ${
+            theme === "dark" ? "" : "lightMode"
+          }`}
+        >
           <div className={styles.tagsLabel}>
             <span
               onClick={() =>
@@ -166,16 +177,25 @@ function MyExpenses() {
               }
             >
               <FontAwesomeIcon
+                className={theme === "dark" ? "" : "lightModeText"}
                 icon={isTagsDropdownVisible ? faMinus : faPlus}
               />
-              &nbsp; Get expenses by your tag
+              <span className={`${theme === "dark" ? "" : "lightModeText"}`}>
+                &nbsp; Get expenses by your tag
+              </span>
             </span>
             {tagFilteredExpenses.length > 0 && (
               <span
                 onClick={handleClearTagClick}
                 className={styles.clearTagContainer}
               >
-                <FontAwesomeIcon icon={faTrashCan} /> Clear Tag
+                <FontAwesomeIcon
+                  className={theme === "dark" ? "" : "lightModeText"}
+                  icon={faTrashCan}
+                />
+                <span className={`${theme === "dark" ? "" : "lightModeText"}`}>
+                  &nbsp; Clear Tag
+                </span>
               </span>
             )}
           </div>
@@ -187,7 +207,11 @@ function MyExpenses() {
                   key={index}
                   className={styles.tagOption}
                 >
-                  {tagOption}
+                  <span
+                    className={`${theme === "dark" ? "" : "lightModeText"}`}
+                  >
+                    {tagOption}
+                  </span>
                 </div>
               ))}
             </div>
@@ -203,7 +227,9 @@ function MyExpenses() {
         />
       )}
 
-      <div className={styles.container}>
+      <div
+        className={`${styles.container} ${theme === "dark" ? "" : "lightMode"}`}
+      >
         {tagFilteredExpenses.length !== 0 ? (
           tagFilteredExpenses.map((expense) => {
             return (
@@ -238,20 +264,34 @@ function MyExpense(props) {
   // props
   const { expense, handleEditClick, handleDeleteClick } = props;
 
+  // context api
+  const { theme } = useTheme();
+
   return (
-    <div className={styles.expenseContainer}>
+    <div
+      className={`${styles.expenseContainer} ${
+        theme === "dark" ? "" : styles.lightStyles
+      }`}
+    >
       <div className={styles.logoContainer}>
-        <FontAwesomeIcon icon={faWallet} />
+        <FontAwesomeIcon
+          className={theme === "dark" ? "" : "lightModeText"}
+          icon={faWallet}
+        />
 
         <div className={styles.actionsContainer}>
           <FontAwesomeIcon
             onClick={() => handleDeleteClick(expense.id)}
-            className={styles.actIcon}
+            className={`${styles.actIcon} ${
+              theme === "dark" ? "" : "lightModeText"
+            }`}
             icon={faTrashCan}
           />
           <FontAwesomeIcon
             onClick={() => handleEditClick(expense.id)}
-            className={styles.actIcon}
+            className={`${styles.actIcon} ${
+              theme === "dark" ? "" : "lightModeText"
+            }`}
             icon={faPenToSquare}
           />
         </div>
@@ -281,7 +321,12 @@ function MyExpense(props) {
 
           {expense.tags.map((tag, index) => {
             return (
-              <div className={styles.tag} key={index}>
+              <div
+                className={`${styles.tag} ${
+                  theme === "dark" ? "" : styles.darkBorder
+                }`}
+                key={index}
+              >
                 {tag}
               </div>
             );

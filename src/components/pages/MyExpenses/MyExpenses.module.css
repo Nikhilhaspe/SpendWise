@@ -8,6 +8,8 @@
   padding: 10px;
 
   color: var(--dark-text-color);
+
+  transition: all 0.3s ease-in-out;
 }
 
 .loaderContainer {
@@ -26,6 +28,11 @@
   cursor: pointer;
 
   transition: all 0.3s ease;
+}
+
+.lightStyles {
+  border: 2px solid var(--dark-background-color);
+  color: var(--dark-background-color);
 }
 
 .logoContainer {
@@ -68,6 +75,10 @@
   transition: all 0.3s ease;
 }
 
+.darkBorder {
+  border: 2px solid var(--dark-background-color);
+}
+
 .tag:hover,
 .expenseContainer:hover {
   border: 2px solid var(--light-text-color);
@@ -98,11 +109,15 @@
   padding: 10px;
   display: flex;
   justify-content: flex-end;
+
+  transition: all 0.3s ease-in-out;
 }
 
 .tagsFilterContainer {
   padding: 10px;
   color: var(--dark-text-color);
+
+  transition: all 0.3s ease-in-out;
 }
 
 .tagsLabel span {

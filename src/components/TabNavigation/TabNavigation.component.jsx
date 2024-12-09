@@ -22,10 +22,12 @@ function TabNavigation() {
   // context api
   const { theme, dispatch } = useTheme();
 
-  console.log(theme);
-
   return (
-    <div className={styles.tabNavContainer}>
+    <div
+      className={`${styles.tabNavContainer} ${
+        theme === "dark" ? "" : "lightMode"
+      }`}
+    >
       <div
         onClick={() => dispatch({ type: "toggleTheme" })}
         className={`${styles.tab} ${styles.themeContainer}`}

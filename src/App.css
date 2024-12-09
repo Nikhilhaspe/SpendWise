@@ -1,10 +1,10 @@
 /* CSS Variables */
 :root {
-  /* --light-text-color: #7dd87d; */
   --light-text-color: #53d397;
   --light-background-color: #f7f9ff;
   --dark-text-color: #f7f7f7;
   --dark-background-color: #393e46;
+
   --delete-red-color: #f30a49;
 }
 
@@ -39,4 +39,13 @@ body {
   font-family: "Lato", sans-serif;
   font-weight: 300;
   font-style: normal;
+}
+
+/* Light Mode Theme, as we set dark mode theme by default */
+.lightMode {
+  background-color: var(--light-background-color);
+}
+
+.lightModeText {
+  color: var(--dark-background-color);
 }

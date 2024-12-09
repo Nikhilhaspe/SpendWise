@@ -12,6 +12,7 @@ import { getUniqueId, isBlankOrEmpty } from "../../utilities";
 
 // context api
 import { useAuth } from "../../contexts/AuthContext";
+import { useTheme } from "../../contexts/ThemeContext";
 
 // indexed db queries
 import { addExpense, getExpense, updateExpense } from "../../ExpenseDbOps";
@@ -79,6 +80,7 @@ function AddEditCommonForm() {
 
   // context api
   const { username } = useAuth();
+  const { theme } = useTheme();
 
   // RRD
   const { expenseId } = useParams();
@@ -226,13 +228,17 @@ function AddEditCommonForm() {
   }
 
   return (
-    <div className={styles.container}>
+    <div
+      className={`${styles.container} ${theme === "dark" ? "" : "lightMode"}`}
+    >
       <p className={styles.actionHeader}>
         {expenseId ? "Edit Your Expense" : "Add New Expense"}
       </p>
 
       <div className={styles.formWrapper}>
-        <div className={styles.row}>
+        <div
+          className={`${styles.row} ${theme === "dark" ? "" : styles.lightRow}`}
+        >
           <input
             placeholder="Enter Description"
             type="text"
@@ -242,7 +248,9 @@ function AddEditCommonForm() {
             onChange={handleFormChange}
           />
         </div>
-        <div className={styles.row}>
+        <div
+          className={`${styles.row} ${theme === "dark" ? "" : styles.lightRow}`}
+        >
           <input
             type="text"
             placeholder="Enter Category"
@@ -252,7 +260,9 @@ function AddEditCommonForm() {
             onChange={handleFormChange}
           />
         </div>
-        <div className={styles.row}>
+        <div
+          className={`${styles.row} ${theme === "dark" ? "" : styles.lightRow}`}
+        >
           <input
             type="number"
             placeholder="Enter Amount Spent"
@@ -262,7 +272,9 @@ function AddEditCommonForm() {
             onChange={handleFormChange}
           />
         </div>
-        <div className={styles.row}>
+        <div
+          className={`${styles.row} ${theme === "dark" ? "" : styles.lightRow}`}
+        >
           <input
             type="date"
             name="date"
@@ -271,7 +283,11 @@ function AddEditCommonForm() {
             onChange={handleFormChange}
           />
         </div>
-        <div className={`${styles.row} ${styles.addTagPosition}`}>
+        <div
+          className={`${styles.row} ${styles.addTagPosition} ${
+            theme === "dark" ? "" : styles.lightRow
+          }`}
+        >
           <input
             type="text"
             placeholder="Specify Tags (Optional)"
@@ -293,7 +309,10 @@ function AddEditCommonForm() {
           onClick={() => handleSubmitForm(expenseId ? "edit" : "add")}
         >
           {isLoading ? (
-            <MoonLoader size={30} color="#f7f9ff" />
+            <MoonLoader
+              size={30}
+              color={theme === "dark" ? "#f7f9ff" : "#393e46"}
+            />
           ) : expenseId ? (
             "Edit Your Expense"
           ) : (

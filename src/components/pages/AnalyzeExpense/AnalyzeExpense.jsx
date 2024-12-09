@@ -27,6 +27,7 @@ import styles from "./AnalyzeExpense.module.css";
 
 // context api
 import { useAuth } from "../../../contexts/AuthContext";
+import { useTheme } from "../../../contexts/ThemeContext";
 
 // expense db ops
 import { getAllExpenses } from "../../../ExpenseDbOps";
@@ -34,6 +35,7 @@ import { getAllExpenses } from "../../../ExpenseDbOps";
 function AnalyzeExpense() {
   // context api
   const { username } = useAuth();
+  const { theme } = useTheme();
 
   // state
   const [chartData, setChartData] = useState(null);
@@ -76,7 +78,9 @@ function AnalyzeExpense() {
   );
 
   return (
-    <div className={styles.container}>
+    <div
+      className={`${styles.container} ${theme == "dark" ? "" : "lightMode"}`}
+    >
       {chartData ? (
         <Bar
           data={chartData}
@@ -92,7 +96,7 @@ function AnalyzeExpense() {
         />
       ) : (
         <div className={styles.loaderContainer}>
-          <MoonLoader color="#f7f9ff" />
+          <MoonLoader color={theme === "dark" ? "#f7f9ff" : "#393e46"} />
         </div>
       )}
     </div>

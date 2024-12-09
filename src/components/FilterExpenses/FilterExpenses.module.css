@@ -3,7 +3,10 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding: 15px;
   gap: 15px;
+
+  transition: all 0.3s ease-in-out;
 }
 
 .filtersContainer {
@@ -22,7 +25,12 @@
   padding: 5px 10px;
   border-radius: 6px;
   border: 2px solid var(--dark-text-color);
+
   transition: all 0.3s ease;
+}
+
+.darkFilter {
+  border: 2px solid var(--dark-background-color);
 }
 
 .filter:hover {
@@ -54,11 +62,16 @@
   transition: all 0.3s ease-in-out;
 }
 
+.lightRow input {
+  color: var(--dark-background-color);
+  border-bottom: 2px solid var(--dark-background-color);
+}
+
 .customDateFilterContainer input:focus {
   border-bottom: 2px solid var(--light-text-color);
 }
 
-.customDateFilterContainer label {
+.customDateFilterContainer span {
   display: inline-flex;
   justify-content: center;
   align-items: center;

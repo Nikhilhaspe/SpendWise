@@ -6,9 +6,19 @@ import { faSackDollar } from "@fortawesome/free-solid-svg-icons";
 // css module
 import styles from "./Header.module.css";
 
+// context api
+import { useTheme } from "../../contexts/ThemeContext";
+
 function Header() {
+  // context api
+  const { theme } = useTheme();
+
   return (
-    <div className={styles.headerConntainer}>
+    <div
+      className={`${styles.headerContainer} ${
+        theme === "dark" ? "" : "lightMode"
+      }`}
+    >
       <Link to="/">
         <FontAwesomeIcon className={styles.logo} icon={faSackDollar} />
         <span className={styles.logo}>SpendWise</span>

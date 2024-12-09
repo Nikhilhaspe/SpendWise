@@ -1,7 +1,9 @@
 .container {
-  margin-top: 30px;
+  padding: 30px;
   padding-left: 20px;
   padding-right: 20px;
+
+  transition: all 0.3s ease-in-out;
 }
 
 .formWrapper {
@@ -39,6 +41,11 @@
   border-bottom: 2px solid var(--dark-text-color);
 
   transition: all 0.3s ease-in-out;
+}
+
+.lightRow input {
+  color: var(--dark-background-color);
+  border-bottom: 2px solid var(--dark-background-color);
 }
 
 .row input:focus {

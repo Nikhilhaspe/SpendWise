@@ -115,11 +115,9 @@ function AddEditCommonForm() {
     switch (submitType) {
       case "add":
         await saveExpense();
-        navigate("/app/expenses");
         return;
       case "edit":
         await editExpense();
-        navigate("/app/expenses");
         return;
       default:
         throw new Error("Invalid Submit Button Type");
@@ -148,6 +146,8 @@ function AddEditCommonForm() {
       dispatch({ type: "reset" });
 
       toast.success("Saved Successfully!");
+
+      navigate("/SpendWise/app/expenses");
     } catch (error) {
       toast.error(error.message || "Something went wrong while adding data!");
     } finally {
@@ -192,6 +192,8 @@ function AddEditCommonForm() {
       dispatch({ type: "reset" });
 
       toast.success("Saved Successfully!");
+
+      navigate("/SpendWise/app/expenses");
     } catch (error) {
       toast.error(error.message || "Something went wrong while adding data!");
     } finally {

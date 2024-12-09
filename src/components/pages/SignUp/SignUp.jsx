@@ -81,7 +81,7 @@ function SignUp() {
       } else {
         initUserDb(username, password);
         toast.success("Signed Up Successfully!");
-        navigate("/login");
+        navigate("/SpendWise/login");
       }
     } catch (error) {
       toast.error(

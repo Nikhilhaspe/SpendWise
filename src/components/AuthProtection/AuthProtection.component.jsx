@@ -19,7 +19,7 @@ function AuthProtection(props) {
   // effects
   useEffect(
     function () {
-      if (!isLoggedIn) navigate("/");
+      if (!isLoggedIn) navigate("/SpendWise");
     },
     [isLoggedIn, navigate]
   );

@@ -28,11 +28,11 @@ function App() {
       <ThemeContextProvider>
         <AuthContextProvider>
           <Routes>
-            <Route path="SpendWise" element={<HomePage />} />
-            <Route path="login" element={<LogIn />} />
-            <Route path="signup" element={<SignUp />} />
+            <Route path="/SpendWise" element={<HomePage />} />
+            <Route path="/SpendWise/login" element={<LogIn />} />
+            <Route path="/SpendWise/signup" element={<SignUp />} />
             <Route
-              path="app"
+              path="/SpendWise/app"
               element={
                 <AuthProtection>
                   <AppLayout />

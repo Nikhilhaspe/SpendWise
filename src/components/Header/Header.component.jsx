@@ -19,7 +19,7 @@ function Header() {
         theme === "dark" ? "" : "lightMode"
       }`}
     >
-      <Link to="/">
+      <Link to="/SpendWise">
         <FontAwesomeIcon className={styles.logo} icon={faSackDollar} />
         <span className={styles.logo}>SpendWise</span>
       </Link>

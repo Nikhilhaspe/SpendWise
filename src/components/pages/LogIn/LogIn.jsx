@@ -47,7 +47,7 @@ function LogIn() {
 
       if (loginStatus) {
         dispatch({ type: "login", payload: formData.username });
-        navigate("/app");
+        navigate("/SpendWise/app");
         toast.success("Login Successfull");
       } else {
         toast.error("Invalid Username or Password");

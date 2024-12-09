@@ -89,7 +89,7 @@ function MyExpenses() {
   }
 
   function handleEditClick(expenseId) {
-    navigate(`/app/editExpense/${expenseId}`);
+    navigate(`/SpendWise/app/editExpense/${expenseId}`);
   }
 
   function handleDateChange(event) {

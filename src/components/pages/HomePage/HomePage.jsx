@@ -26,7 +26,7 @@ function HomePage() {
   // effects
   useEffect(
     function () {
-      if (isLoggedIn) navigate("/app");
+      if (isLoggedIn) navigate("/SpendWise/app");
     },
     [isLoggedIn, navigate]
   );
@@ -39,14 +39,14 @@ function HomePage() {
       <h3>👋 Track your daily expenses and much more! 💵</h3>
 
       <button
-        onClick={() => handleNavigateButtonClick("/login")}
+        onClick={() => handleNavigateButtonClick("/SpendWise/login")}
         className={styles.startBtn}
       >
         LogIn
       </button>
 
       <button
-        onClick={() => handleNavigateButtonClick("/signup")}
+        onClick={() => handleNavigateButtonClick("/SpendWise/signup")}
         className={styles.startBtn}
       >
         Sign Up

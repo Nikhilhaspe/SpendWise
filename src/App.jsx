@@ -28,7 +28,7 @@ function App() {
       <ThemeContextProvider>
         <AuthContextProvider>
           <Routes>
-            <Route path="/" element={<HomePage />} />
+            <Route path="SpendWise" element={<HomePage />} />
             <Route path="login" element={<LogIn />} />
             <Route path="signup" element={<SignUp />} />
             <Route

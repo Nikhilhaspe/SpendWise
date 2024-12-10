@@ -13,7 +13,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { MoonLoader } from "react-spinners";
 import { useNavigate } from "react-router-dom";
-import { useOutletContext } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 // css module
 import styles from "./MyExpenses.module.css";
@@ -37,8 +38,6 @@ import { getExpensesByTag, getUniqueTags } from "../../../utilities";
 const TODAY_DATE = new Date().toISOString().split("T")[0];
 
 function MyExpenses() {
-  const toast = useOutletContext();
-
   // context api
   const { username } = useAuth();
   const { theme } = useTheme();
@@ -230,6 +229,8 @@ function MyExpenses() {
       <div
         className={`${styles.container} ${theme === "dark" ? "" : "lightMode"}`}
       >
+        <ToastContainer position="top-center" theme="dark" />
+
         {tagFilteredExpenses.length !== 0 ? (
           tagFilteredExpenses.map((expense) => {
             return (

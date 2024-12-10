@@ -1,7 +1,5 @@
 // library imports
 import { Outlet } from "react-router-dom";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 // css module
 import styles from "./AppLayout.module.css";
@@ -13,12 +11,10 @@ import TabNavigation from "../TabNavigation/TabNavigation.component";
 function AppLayout() {
   return (
     <div className={styles.container}>
-      <ToastContainer position="top-center" theme="dark" />
-
       <Header />
 
       <div className={styles.outletContainer}>
-        <Outlet context={toast} />
+        <Outlet />
       </div>
 
       <TabNavigation />

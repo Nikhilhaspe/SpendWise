@@ -1,8 +1,9 @@
 /* eslint-disable react/prop-types */
 // library imports
-import { useNavigate, useOutletContext } from "react-router-dom";
 import { useEffect, useReducer } from "react";
 import { MoonLoader } from "react-spinners";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 // css module
 import styles from "./AddEditCommonForm.module.css";
@@ -76,15 +77,12 @@ function reducer(state, action) {
 }
 
 function AddEditCommonForm() {
-  const toast = useOutletContext();
-
   // context api
   const { username } = useAuth();
   const { theme } = useTheme();
 
   // RRD
   const { expenseId } = useParams();
-  const navigate = useNavigate();
 
   // state
   const [
@@ -146,8 +144,6 @@ function AddEditCommonForm() {
       dispatch({ type: "reset" });
 
       toast.success("Saved Successfully!");
-
-      navigate("/SpendWise/app/expenses");
     } catch (error) {
       toast.error(error.message || "Something went wrong while adding data!");
     } finally {
@@ -192,8 +188,6 @@ function AddEditCommonForm() {
       dispatch({ type: "reset" });
 
       toast.success("Saved Successfully!");
-
-      navigate("/SpendWise/app/expenses");
     } catch (error) {
       toast.error(error.message || "Something went wrong while adding data!");
     } finally {
@@ -233,6 +227,8 @@ function AddEditCommonForm() {
     <div
       className={`${styles.container} ${theme === "dark" ? "" : "lightMode"}`}
     >
+      <ToastContainer position="top-center" theme="dark" />
+
       <p className={styles.actionHeader}>
         {expenseId ? "Edit Your Expense" : "Add New Expense"}
       </p>
